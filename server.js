@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 const morgan = require('morgan');
+const { parse } = require('node-html-parser');
 const app = express();
 require('dotenv').config();
 
@@ -18,7 +19,21 @@ if (env === 'development') {
   app.use(morgan('dev')); // Logs HTTP requests in a concise format
 }
 
-// Proxy endpoint to fetch HTML content
+// Helper functions for filename generation
+const sanitizeFilename = (title) => {
+  return title.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+};
+
+const truncateFilename = (filename, maxLength = 100) => {
+  return filename.length > maxLength ? filename.slice(0, maxLength) : filename;
+};
+
+const generateFilename = (title) => {
+  const sanitized = sanitizeFilename(title);
+  const truncated = truncateFilename(sanitized);
+  return `${truncated}.md`;
+};
+
 app.post('/fetch-html', async (req, res, next) => {
   try {
     const response = await fetch(req.body.url, {
@@ -31,12 +46,31 @@ app.post('/fetch-html', async (req, res, next) => {
       throw new Error(`Failed to fetch URL: ${response.statusText} (HTTP ${response.status})`);
     }
 
-    const html = await response.text();
-    res.send(html);
+    const responseHtml = await response.text();
+    const document = parse(responseHtml);
+
+    // Extract page title
+    const pageTitle = document.querySelector('title')?.text || 'Untitled';
+
+    // Generate filename
+    const filename = generateFilename(pageTitle);
+
+    // Find content (prioritize article, then main)
+    let content = document.querySelector('article') || document.querySelector('main');
+
+    // If neither <article> nor <main> is found, use the entire body
+    const html = content ? content.innerHTML : document.body.innerHTML;
+
+    // Return html and filename for use by app.js
+    res.json({
+      html: html,
+      filename: filename
+    });
+
   } catch (error) {
     console.error(`[Error] Failed to fetch URL: ${req.body.url}`);
     console.error(`[Details] ${error.message}`);
-    next(error); // Pass the error to the error-handling middleware
+    next(error);
   }
 });
 

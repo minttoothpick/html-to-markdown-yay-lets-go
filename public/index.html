@@ -42,17 +42,17 @@
 
     <div class="input-section">
       <input type="url" id="urlInput" placeholder="Paste URL here">
-      <button onclick="handleUrl()">Convert URL</button>
+      <button id="urlButton">Convert URL</button>
       <p>or</p>
       <textarea id="htmlInput" placeholder="Paste HTML here"></textarea>
-      <button onclick="handleHtml()">Convert HTML</button>
+      <button id="htmlButton">Convert HTML</button>
     </div>
 
     <div class="output-section">
       <textarea id="markdownOutput" readonly></textarea>
       <div class="buttons">
-        <button onclick="copyToClipboard()">Copy</button>
-        <button onclick="downloadMd()">Download</button>
+        <button id="copyButton">Copy</button>
+        <button id="downloadButton">Download</button>
       </div>
     </div>
   </div>
