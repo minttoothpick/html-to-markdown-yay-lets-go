@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
+  const markdownOutputElem = document.getElementById("markdownOutput");
+
   const turndownService = new TurndownService({
     headingStyle: "atx",
     codeBlockStyle: "fenced",
@@ -48,34 +50,32 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function convertToMarkdown(html, filename) {
     const markdown = turndownService.turndown(html);
-    const markdownOutput = document.getElementById("markdownOutput");
     const downloadButton = document.getElementById("downloadButton");
     if (!markdownOutput || !downloadButton) {
       console.error("Markdown output or download button not found");
       return;
     }
-    markdownOutput.value = markdown;
+    markdownOutputElem.value = markdown;
 
     // Attach the download functionality dynamically
     downloadButton.addEventListener("click", () => downloadMd(markdown, filename));
   }
 
   function copyToClipboard() {
-    const output = document.getElementById("markdownOutput");
-    if (!output) {
+    if (!markdownOutputElem) {
       showMessage("Markdown output element not found", "status");
       console.error("Markdown output element not found");
       return;
     }
 
     // Check if the output field is empty or only contains whitespace
-    if (!output.value.trim()) {
+    if (!markdownOutputElem.value.trim()) {
       showMessage("No content to copy", "alert");
       return;
     }
 
-    output.select(); // Select the text field
-    navigator.clipboard.writeText(output.value).then(() => {
+    markdownOutputElem.select(); // Select the text field
+    navigator.clipboard.writeText(markdownOutputElem.value).then(() => {
       showMessage("Markdown copied to clipboard", "status");
     }).catch((err) => {
       showMessage("Failed to copy to clipboard", "alert");
