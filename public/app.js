@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", function () {
     navigator.clipboard.writeText(output.value).then(() => {
       alert("Copied to clipboard!");
     }).catch((err) => {
-      console.error("Failed to copy:", err);
+      console.error("Failed to copy text: ", err);
       alert("Failed to copy to clipboard.");
     });
   }
@@ -95,13 +95,22 @@ document.addEventListener("DOMContentLoaded", function () {
     URL.revokeObjectURL(url);
   }
 
+  async function handleUrlAndCopy() {
+    await handleUrl();
+    copyToClipboard();
+  }
+
   // Attach event listeners for all buttons
   const urlButton = document.getElementById("urlButton");
-  const htmlButton = document.getElementById("htmlButton");
-  const copyButton = document.getElementById("copyButton");
-
   if (urlButton) urlButton.addEventListener("click", handleUrl);
+
+  const urlConvertCopyButton = document.getElementById('urlConvertCopyButton');
+  if (urlConvertCopyButton) urlConvertCopyButton.addEventListener('click', handleUrlAndCopy);
+
+  const htmlButton = document.getElementById("htmlButton");
   if (htmlButton) htmlButton.addEventListener("click", handleHtml);
+
+  const copyButton = document.getElementById("copyButton");
   if (copyButton) copyButton.addEventListener("click", copyToClipboard);
 
   // Ensure the download button exists and is dynamically handled in `convertToMarkdown`
