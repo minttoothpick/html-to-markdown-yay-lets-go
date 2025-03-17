@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     const url = urlInput.value.trim();
     if (!url) {
-      alert("Please enter a valid URL!");
+      showMessage("Please enter a valid URL", "alert");
       return;
     }
     try {
@@ -26,8 +26,8 @@ document.addEventListener("DOMContentLoaded", function () {
       const data = await response.json();
       convertToMarkdown(data.html, data.filename);
     } catch (error) {
+      showMessage("Error fetching URL", "alert");
       console.error("Error fetching URL:", error);
-      alert("Error fetching URL");
     }
   }
 
@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     const html = htmlInput.value.trim();
     if (!html) {
-      alert("No HTML content provided!");
+      showMessage("There's no HTML in there!", "alert");
       return;
     }
     console.log("HTML input:", html); // Debugging: Check if HTML is captured
@@ -57,23 +57,29 @@ document.addEventListener("DOMContentLoaded", function () {
     markdownOutput.value = markdown;
 
     // Attach the download functionality dynamically
-    downloadButton.addEventListener('click', () => downloadMd(markdown, filename));
+    downloadButton.addEventListener("click", () => downloadMd(markdown, filename));
   }
 
   function copyToClipboard() {
     const output = document.getElementById("markdownOutput");
     if (!output) {
+      showMessage("Markdown output element not found", "status");
       console.error("Markdown output element not found");
       return;
     }
 
-    // Copy markdown to clipboard
-    output.select();
+    // Check if the output field is empty or only contains whitespace
+    if (!output.value.trim()) {
+      showMessage("No content to copy", "alert");
+      return;
+    }
+
+    output.select(); // Select the text field
     navigator.clipboard.writeText(output.value).then(() => {
-      alert("Copied to clipboard!");
+      showMessage("Markdown copied to clipboard", "status");
     }).catch((err) => {
+      showMessage("Failed to copy to clipboard", "alert");
       console.error("Failed to copy text: ", err);
-      alert("Failed to copy to clipboard.");
     });
   }
 
@@ -85,7 +91,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const a = document.createElement("a");
     a.href = url;
 
-    // Use the provided filename or fallback to 'download.md'
+    // Use the provided filename or fallback to "download.md"
     a.download = filename || "download.md";
 
     // Trigger the download
@@ -100,12 +106,24 @@ document.addEventListener("DOMContentLoaded", function () {
     copyToClipboard();
   }
 
+  function showMessage(message, role="status") {
+    const messageContainer = document.getElementById("messageContainer");
+    messageContainer.textContent = message;
+    messageContainer.setAttribute("role", role);
+
+    // Optionally, clear the message after a few seconds
+    // setTimeout(() => {
+    //   messageContainer.textContent = "";
+    //   messageContainer.removeAttribute("role");
+    // }, 5000); // Leave the message visible for 5 seconds
+  }
+
   // Attach event listeners for all buttons
   const urlButton = document.getElementById("urlButton");
   if (urlButton) urlButton.addEventListener("click", handleUrl);
 
-  const urlConvertCopyButton = document.getElementById('urlConvertCopyButton');
-  if (urlConvertCopyButton) urlConvertCopyButton.addEventListener('click', handleUrlAndCopy);
+  const urlConvertCopyButton = document.getElementById("urlConvertCopyButton");
+  if (urlConvertCopyButton) urlConvertCopyButton.addEventListener("click", handleUrlAndCopy);
 
   const htmlButton = document.getElementById("htmlButton");
   if (htmlButton) htmlButton.addEventListener("click", handleHtml);

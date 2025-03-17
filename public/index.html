@@ -34,11 +34,30 @@
   button:hover {
     background: #0056b3;
   }
+
+  #messageContainer {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    min-height: 1em; /* Ensures the container always takes up space */
+  }
+
+  [role="status"] {
+    background-color: #dff0d8;
+    color: #3c763d;
+  }
+
+  [role="alert"] {
+    background-color: #f2dede;
+    color: #a94442;
+  }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>HTML/Markdown Converter</h1>
+
+    <div id="messageContainer" aria-live="polite"></div>
 
     <div class="input-section">
       <input type="url" id="urlInput" placeholder="Paste URL here">
