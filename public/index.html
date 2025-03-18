@@ -27,7 +27,6 @@
     font-size: 1em;
   }
 
-
   .grid {
     /* flex: 1; */
     display: grid;
@@ -40,6 +39,10 @@
   .flex-col {
     display: flex;
     flex-direction: column;
+  }
+
+  .flex-col--100 {
+    height: 100%;
   }
 
   input {
@@ -98,14 +101,14 @@
           <button type="button" id="urlConvertCopyButton">Convert + Copy</button>
         </div>
       </form>
-      <form class="flex-col" id="htmlForm">
+      <form class="flex-col flex-col--100" id="htmlForm">
         <textarea id="htmlInput" placeholder="Paste HTML here"></textarea>
         <button type="button" id="htmlButton">Convert HTML</button>
       </form>
     </div>
     <div class="flex-col">
       <h2>Output</h2>
-      <form class="flex-col" id="markdownForm">
+      <form class="flex-col flex-col--100" id="markdownForm">
         <textarea id="markdownOutput" readonly></textarea>
         <div class="buttons">
           <button type="button" id="copyButton">Copy</button>
