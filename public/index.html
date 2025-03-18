@@ -3,6 +3,8 @@
 <head>
   <title>HTML to Markdown Converter</title>
   <style>
+  /* https://coolors.co/000000-291528-3a3e3b-f0eff4-9e829c */
+
   html, body { height: 100%; }
 
   body {
@@ -14,6 +16,17 @@
     /* display: flex;
     flex-direction: column; */
   }
+
+  button,
+  input,
+  textarea,
+  input::placeholder,
+  textarea::placeholder {
+    font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+    color: #3A3E3B;
+    font-size: 1em;
+  }
+
 
   .grid {
     /* flex: 1; */
@@ -49,7 +62,7 @@
   }
 
   button:hover {
-    background: #0056b3;
+    background: #000000;
   }
 
   .message-container {
