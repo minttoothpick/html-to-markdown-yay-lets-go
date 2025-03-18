@@ -37,7 +37,7 @@
     min-height: 500px;
   }
 
-  .grid > div {
+  .flex-col {
     display: flex;
     flex-direction: column;
   }
@@ -89,23 +89,29 @@
   <div class="message-container" id="messageContainer" aria-live="polite"></div>
 
   <main class="grid">
-    <div>
+    <div class="flex-col">
       <h2>Input</h2>
-      <input type="url" id="urlInput" placeholder="Paste URL here">
-      <div class="buttons">
-        <button id="urlButton">Convert URL</button>
-        <button id="urlConvertCopyButton">Convert URL and Copy</button>
-      </div>
-      <textarea id="htmlInput" placeholder="Paste HTML here"></textarea>
-      <button id="htmlButton">Convert HTML</button>
+      <form class="flex-col" id="urlForm">
+        <input type="url" id="urlInput" placeholder="Paste URL here">
+        <div class="buttons">
+          <button type="submit" id="urlButton">Convert URL</button>
+          <button type="button" id="urlConvertCopyButton">Convert + Copy</button>
+        </div>
+      </form>
+      <form class="flex-col" id="htmlForm">
+        <textarea id="htmlInput" placeholder="Paste HTML here"></textarea>
+        <button type="button" id="htmlButton">Convert HTML</button>
+      </form>
     </div>
-    <div>
+    <div class="flex-col">
       <h2>Output</h2>
-      <textarea id="markdownOutput" readonly></textarea>
-      <div class="buttons">
-        <button id="copyButton">Copy</button>
-        <button id="downloadButton">Download</button>
-      </div>
+      <form class="flex-col" id="markdownForm">
+        <textarea id="markdownOutput" readonly></textarea>
+        <div class="buttons">
+          <button type="button" id="copyButton">Copy</button>
+          <button type="button" id="downloadButton">Download</button>
+        </div>
+      </form>
     </div>
   </main>
 

@@ -8,7 +8,20 @@ document.addEventListener("DOMContentLoaded", function () {
     strongDelimiter: "**",
   });
 
-  async function handleUrl() {
+  document.getElementById('urlForm').addEventListener('submit', function(e) {
+    e.preventDefault(); // Prevent the form from submitting normally
+    // Call your URL conversion function here
+    convertUrl();
+  });
+
+  // document.getElementById('htmlForm').addEventListener('submit', function(e) {
+  //   e.preventDefault();
+  //   copyToClipboard();
+  // });
+
+  // The markdown form doesn't need a submit event since its buttons are type="button"
+
+  async function convertUrl() {
     const urlInput = document.getElementById("urlInput");
     if (!urlInput) {
       console.error("URL input element not found");
@@ -33,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  function handleHtml() {
+  function convertHtml() {
     const htmlInput = document.getElementById("htmlInput");
     if (!htmlInput) {
       console.error("HTML input element not found");
@@ -51,7 +64,7 @@ document.addEventListener("DOMContentLoaded", function () {
   function convertToMarkdown(html, filename) {
     const markdown = turndownService.turndown(html);
     const downloadButton = document.getElementById("downloadButton");
-    if (!markdownOutput || !downloadButton) {
+    if (!markdownOutputElem || !downloadButton) {
       console.error("Markdown output or download button not found");
       return;
     }
@@ -63,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function copyToClipboard() {
     if (!markdownOutputElem) {
-      showMessage("Markdown output element not found", "status");
+      showMessage("Markdown output element not found", "alert");
       console.error("Markdown output element not found");
       return;
     }
@@ -101,8 +114,8 @@ document.addEventListener("DOMContentLoaded", function () {
     URL.revokeObjectURL(url);
   }
 
-  async function handleUrlAndCopy() {
-    await handleUrl();
+  async function convertUrlAndCopy() {
+    await convertUrl();
     copyToClipboard();
   }
 
@@ -118,15 +131,11 @@ document.addEventListener("DOMContentLoaded", function () {
     // }, 5000); // Leave the message visible for 5 seconds
   }
 
-  // Attach event listeners for all buttons
-  const urlButton = document.getElementById("urlButton");
-  if (urlButton) urlButton.addEventListener("click", handleUrl);
-
   const urlConvertCopyButton = document.getElementById("urlConvertCopyButton");
-  if (urlConvertCopyButton) urlConvertCopyButton.addEventListener("click", handleUrlAndCopy);
+  if (urlConvertCopyButton) urlConvertCopyButton.addEventListener("click", convertUrlAndCopy);
 
   const htmlButton = document.getElementById("htmlButton");
-  if (htmlButton) htmlButton.addEventListener("click", handleHtml);
+  if (htmlButton) htmlButton.addEventListener("click", convertHtml);
 
   const copyButton = document.getElementById("copyButton");
   if (copyButton) copyButton.addEventListener("click", copyToClipboard);
