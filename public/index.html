@@ -1,96 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>HTML to Markdown Converter</title>
-  <style>
-  /* https://coolors.co/000000-291528-3a3e3b-f0eff4-9e829c */
-
-  html, body {
-    height: 100%;
-  }
-
-  body {
-    font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
-    color: #291528;
-    max-width: 80vw;
-    margin: 0 auto;
-    padding: 20px;
-  }
-
-  button,
-  input,
-  textarea,
-  input::placeholder,
-  textarea::placeholder {
-    font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
-    color: #3A3E3B;
-    font-size: 1em;
-  }
-
-  .grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    height: 70vh;
-    min-height: 500px;
-  }
-
-  .flex-col {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .flex-col--100 {
-    height: 100%;
-  }
-
-  input {
-    margin-bottom: 10px;
-  }
-
-  textarea {
-    flex-grow: 1;
-    margin-bottom: 10px;
-  }
-
-  button {
-    padding: 8px 16px;
-    margin-bottom: 10px;
-    cursor: pointer;
-    background: #9E829C;
-    color: #F0EFF4;
-    border: none;
-    border-radius: 4px;
-  }
-
-  button:hover {
-    background: #000000;
-  }
-
-  .message-container {
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 4px;
-    min-height: 1em;
-  }
-
-  [role="status"] {
-    background-color: #dff0d8;
-    color: #3c763d;
-  }
-
-  [role="alert"] {
-    background-color: #f2dede;
-    color: #a94442;
-  }
-  </style>
+  <title>HTML to Markdown... yay let's go!</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>HTML→Markdown Converter</h1>
+  <div class="page-grid">
+    <header>
+      <h1>HTML to Markdown... yay let's go!</h1>
 
-  <div class="message-container" id="messageContainer" aria-live="polite"></div>
+      <div class="message-container" id="messageContainer" aria-live="polite"></div>
+    </header>
 
-  <main class="grid">
     <div class="flex-col">
       <h2>Input</h2>
       <form class="flex-col" id="urlForm">
@@ -105,6 +26,7 @@
         <button type="button" id="htmlButton">Convert HTML</button>
       </form>
     </div>
+
     <div class="flex-col">
       <h2>Output</h2>
       <form class="flex-col flex-col--100" id="markdownForm">
@@ -115,7 +37,8 @@
         </div>
       </form>
     </div>
-  </main>
+
+  </div>
 
   <script src="https://unpkg.com/turndown@7.2.0/dist/turndown.js"></script>
   <script src="app.js"></script>

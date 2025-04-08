@@ -1,0 +1,121 @@
+/* https://coolors.co/000000-291528-3a3e3b-f0eff4-9e829c */
+
+:root {
+  --color-green: #B0C4B1;
+  --color-red: #EDAFB8;
+  --color-dark: #4A5759;
+  --color-light: #DEDBD2;
+  --color-black: #291528;
+  --gap: 1em;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+  color: var(--color-black);
+}
+
+body::before,
+body::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  z-index: -1;
+}
+
+body::before {
+  left: 0;
+  background-color: var(--color-green);
+}
+
+body::after {
+  right: 0;
+  background-color: var(--color-red);
+}
+
+button,
+input,
+textarea,
+input::placeholder,
+textarea::placeholder {
+  font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+  color: var(--color-dark);
+  font-size: 1em;
+}
+
+input {
+  margin-bottom: 10px;
+}
+
+textarea {
+  flex-grow: 1;
+  margin-bottom: 10px;
+}
+
+button {
+  padding: 8px 16px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  background: var(--color-dark);
+  color: var(--color-light);
+  border: none;
+  border-radius: 4px;
+}
+
+button:hover {
+  background: var(--color-black);
+}
+
+.page-grid {
+  max-width: 80vw;
+  min-height: 90vh;
+  margin: 0 auto;
+  padding: var(--gap);
+  display: grid;
+  grid-template-rows: auto 1fr;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--gap);
+}
+
+.page-grid > header {
+  grid-column: 1 / -1;
+  container-type: inline-size;
+}
+
+.page-grid > header > h1 {
+  white-space: nowrap;
+  line-height: 1;
+  font-size: clamp(2rem, 5cqi, 10rem);
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-col--100 {
+  height: 100%;
+}
+
+.message-container {
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  min-height: 1em;
+}
+
+[role="status"] {
+  background-color: #dff0d8;
+  color: #3c763d;
+}
+
+[role="alert"] {
+  background-color: #f2dede;
+  color: #a94442;
+}
